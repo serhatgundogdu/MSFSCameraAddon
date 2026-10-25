@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PlatformTarget>x64</PlatformTarget>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <SelfContained>false</SelfContained>
+    <AssemblyName>CinematicCam</AssemblyName>
+    <RootNamespace>CinematicCam</RootNamespace>
+    <ApplicationIcon>..\..\assets\CinematicCam.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <!-- Native SimConnect.dll, MSFS 2024 SDK kurulumundan çıktı klasörüne kopyalanır. -->
+  <PropertyGroup>
+    <SimConnectNativeDll>$(MSFS2024_SDK)SimConnect SDK\lib\SimConnect.dll</SimConnectNativeDll>
+  </PropertyGroup>
+
+  <ItemGroup Condition="Exists('$(SimConnectNativeDll)')">
+    <!-- Tek dosya yayınında da exe'nin yanında kalır (P/Invoke uygulama klasöründen yükler). -->
+    <None Include="$(SimConnectNativeDll)" Link="SimConnect.dll" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
+  </ItemGroup>
+
+  <Target Name="WarnMissingSimConnect" BeforeTargets="Build" Condition="!Exists('$(SimConnectNativeDll)')">
+    <Warning Text="SimConnect.dll bulunamadı: '$(SimConnectNativeDll)'. MSFS2024_SDK ortam değişkenini kontrol edin veya SimConnect.dll'i çıktı klasörüne elle kopyalayın." />
+  </Target>
+
+</Project>

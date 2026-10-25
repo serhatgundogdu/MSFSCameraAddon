@@ -1,0 +1,8 @@
+bin/
+obj/
+.vs/
+*.user
+artifacts/
+
+# Kişisel ChasePlane export dosyaları depoya girmez
+ChasePlane*Export*.zip
