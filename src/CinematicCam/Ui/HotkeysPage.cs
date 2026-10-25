@@ -83,6 +83,8 @@ public sealed class HotkeysPage : IPage
         });
         page.Children.Add(head);
         _status.Margin = new Thickness(0, 0, 0, 12);
+        // Durum yazısı sayfa yeniden çizilse de aynı nesnedir: önce eski panelden ayır.
+        (_status.Parent as Panel)?.Children.Remove(_status);
         page.Children.Add(_status);
 
         var grid = new System.Windows.Controls.Primitives.UniformGrid { Columns = 2 };

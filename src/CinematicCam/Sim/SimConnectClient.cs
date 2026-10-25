@@ -122,8 +122,18 @@ public sealed class SimConnectClient : IDisposable
             }
 
             _simEvent.WaitOne(100);
-            DrainWork();
-            Dispatch();
+            try
+            {
+                DrainWork();
+                Dispatch();
+            }
+            catch (Exception e)
+            {
+                // Bu iş parçacığındaki bir hata tüm uygulamayı kapatırdı: kaydet, bağlantıyı sıfırla, yeniden dene.
+                CinematicCam.App.WriteCrash(e, "SimConnect");
+                Log?.Invoke("SimConnect hatası, yeniden bağlanılıyor: " + e.Message);
+                CloseHandle();
+            }
         }
 
         ReleaseCameraNow();

@@ -1,7 +1,7 @@
 <Project>
   <!-- Uygulama ve kurulum aynı sürüm numarasını kullanır. -->
   <PropertyGroup>
-    <Version>0.2.0</Version>
+    <Version>0.2.1</Version>
     <Company>CinematicCam</Company>
     <Product>CinematicCam for MSFS 2024</Product>
     <Copyright>CinematicCam</Copyright>
